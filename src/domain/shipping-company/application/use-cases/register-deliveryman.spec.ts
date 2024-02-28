@@ -24,12 +24,12 @@ describe('Register deliveryman', () => {
       name: 'John Doe',
       document: new Document('16409526750'),
       password: 'example',
-      address: Address.create({
-        city: 'Rio de Janeiro',
-        state: 'Rio de Janeiro',
-        street: 'Rua x',
-        zipCode: '28951730',
-      }),
+      address: new Address(
+        'Rua x',
+        'Rio de Janeiro',
+        'Rio de Janeiro',
+        '28951730',
+      ),
     })
 
     expect(result.isRight()).toBe(true)
@@ -41,12 +41,12 @@ describe('Register deliveryman', () => {
   it('should hash deliveryman password upon registration', async () => {
     const result = await sut.execute({
       document: new Document('16409526750'),
-      address: Address.create({
-        city: 'Rio de Janeiro',
-        state: 'Rio de Janeiro',
-        street: 'Rua x',
-        zipCode: '28951730',
-      }),
+      address: new Address(
+        'Rua x',
+        'Rio de Janeiro',
+        'Rio de Janeiro',
+        '28951730',
+      ),
       name: 'John Doe',
       password: 'example',
     })
@@ -63,12 +63,12 @@ describe('Register deliveryman', () => {
     const result = await sut.execute({
       document: new Document('1640952675343'),
       name: 'John Doe',
-      address: Address.create({
-        city: 'Rio de Janeiro',
-        state: 'Rio de Janeiro',
-        street: 'Rua x',
-        zipCode: '28951730',
-      }),
+      address: new Address(
+        'Rua x',
+        'Rio de Janeiro',
+        'Rio de Janeiro',
+        '28951730',
+      ),
       password: 'example',
     })
 
@@ -85,12 +85,12 @@ describe('Register deliveryman', () => {
     const result = await sut.execute({
       document: new Document('16409526750'),
       name: 'John Doe',
-      address: Address.create({
-        city: 'Rio de Janeiro',
-        state: 'Rio de Janeiro',
-        street: 'Rua x',
-        zipCode: '28951730',
-      }),
+      address: new Address(
+        'Rua x',
+        'Rio de Janeiro',
+        'Rio de Janeiro',
+        '28951730',
+      ),
       password: 'example',
     })
 

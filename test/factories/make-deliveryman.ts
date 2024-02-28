@@ -16,12 +16,12 @@ export function makeDeliveryman(
     {
       name: faker.person.fullName(),
       document: new Document(generateRandomCPF()),
-      address: Address.create({
-        city: faker.location.city(),
-        state: faker.location.state(),
-        street: faker.location.street(),
-        zipCode: faker.location.zipCode(),
-      }),
+      address: new Address(
+        faker.location.street(),
+        faker.location.city(),
+        faker.location.state(),
+        faker.location.zipCode(),
+      ),
       password: faker.internet.password(),
       ...override,
     },

@@ -45,7 +45,12 @@ export class RegisterDeliverymanUseCase {
       return left('Deliveryman already exists.')
     }
 
-    const deliverymanAddress = Address.create(address)
+    const deliverymanAddress = new Address(
+      address.street,
+      address.city,
+      address.state,
+      address.zipCode,
+    )
 
     const deliveryman = Deliveryman.create({
       address: deliverymanAddress,

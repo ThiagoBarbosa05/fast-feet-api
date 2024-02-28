@@ -4,7 +4,7 @@ import { HashComparer } from '../cryptography/hash-comparer'
 import { Encrypter } from '../cryptography/encrypter'
 
 interface AuthenticateDeliverymanUseCaseRequest {
-  cpf: string
+  document: string
   password: string
 }
 
@@ -23,10 +23,11 @@ export class AuthenticateDeliverymanUseCase {
   ) {}
 
   async execute({
-    cpf,
+    document,
     password,
   }: AuthenticateDeliverymanUseCaseRequest): Promise<AuthenticateDeliverymanUseCaseResponse> {
-    const deliveryman = await this.deliverymanRepository.findByCpf(cpf)
+    const deliveryman =
+      await this.deliverymanRepository.findByDocument(document)
 
     if (!deliveryman) return left('Wrong credentials')
 

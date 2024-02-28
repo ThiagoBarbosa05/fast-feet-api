@@ -26,8 +26,18 @@ export class Deliveryman extends Entity<DeliverymanProps> {
     return this.props.address
   }
 
+  set address(address: Address) {
+    this.props.address = address
+    this.touch()
+  }
+
   get password() {
     return this.props.password
+  }
+
+  set password(password: string) {
+    this.props.password = password
+    this.touch()
   }
 
   get createdAt() {
@@ -36,6 +46,10 @@ export class Deliveryman extends Entity<DeliverymanProps> {
 
   get updatedAt() {
     return this.props.updatedAt
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
   }
 
   static create(

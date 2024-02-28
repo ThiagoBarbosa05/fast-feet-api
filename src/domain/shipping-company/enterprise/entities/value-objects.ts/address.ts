@@ -1,46 +1,29 @@
-import { ValueObject } from '@/core/entities/value-objects'
-import { Optional } from '@/core/types/optional'
+export class Address {
+  private _street: string
+  private _city: string
+  private _state: string
+  private _zipCode: string
 
-export interface AddressProps {
-  street: string
-  city: string
-  state: string
-  zipCode: string
-  createdAt: Date | null
-  updatedAt?: Date
-}
+  constructor(street: string, city: string, state: string, zipCode: string) {
+    this._street = street
+    this._city = city
+    this._state = state
+    this._zipCode = zipCode
+  }
 
-export class Address extends ValueObject<AddressProps> {
   get street() {
-    return this.props.street
+    return this._street
   }
 
   get city() {
-    return this.props.city
+    return this._city
   }
 
   get state() {
-    return this.props.state
+    return this._state
   }
 
   get zipCode() {
-    return this.props.zipCode
-  }
-
-  get createdAt() {
-    return this.props.createdAt
-  }
-
-  get updatedAt() {
-    return this.props.updatedAt
-  }
-
-  static create(props: Optional<AddressProps, 'createdAt'>) {
-    const address = new Address({
-      ...props,
-      createdAt: new Date(),
-    })
-
-    return address
+    return this._zipCode
   }
 }
