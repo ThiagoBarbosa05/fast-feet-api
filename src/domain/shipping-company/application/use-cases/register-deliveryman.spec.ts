@@ -4,6 +4,8 @@ import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { Address } from '../../enterprise/entities/value-objects.ts/address'
 import { Document } from '../../enterprise/entities/value-objects.ts/document'
 import { makeDeliveryman } from 'test/factories/make-deliveryman'
+import { InvalidDocumentError } from './errors/invalid-document-error'
+import { DeliverymanAlreadyExistsError } from './errors/deliveryman-already-exists-error'
 
 let fakeHasher: FakeHasher
 let inMemoryDeliverymanRepository: InMemoryDeliverymanRepository
@@ -73,6 +75,7 @@ describe('Register deliveryman', () => {
     })
 
     expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(InvalidDocumentError)
   })
 
   it('not should be able to register an deliveryman with the same document.', async () => {
@@ -95,5 +98,6 @@ describe('Register deliveryman', () => {
     })
 
     expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(DeliverymanAlreadyExistsError)
   })
 })

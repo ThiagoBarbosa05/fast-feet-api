@@ -28,8 +28,6 @@ describe('Edit deliveryman', () => {
       address: new Address('street x', 'London', 'LD', '34345465456'),
     })
 
-    console.log(deliveryman.address)
-
     expect(deliveryman.address.city).toEqual('London')
   })
 })

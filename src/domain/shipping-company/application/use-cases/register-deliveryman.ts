@@ -4,6 +4,8 @@ import { Document } from '../../enterprise/entities/value-objects.ts/document'
 import { Deliveryman } from '../../enterprise/entities/deliveryman'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { DeliverymanRepository } from '../repositories/deliveryman'
+import { InvalidDocumentError } from './errors/invalid-document-error'
+import { DeliverymanAlreadyExistsError } from './errors/deliveryman-already-exists-error'
 
 interface RegisterDeliverymanUseCaseRequest {
   name: string
@@ -13,7 +15,7 @@ interface RegisterDeliverymanUseCaseRequest {
 }
 
 type RegisterDeliverymanUseCaseResponse = Either<
-  string,
+  DeliverymanAlreadyExistsError | InvalidDocumentError,
   {
     deliveryman: Deliveryman
   }
@@ -35,14 +37,14 @@ export class RegisterDeliverymanUseCase {
     const adminDocument = new Document(document.toString())
 
     if (!document.validateCpf()) {
-      return left('invalid document')
+      return left(new InvalidDocumentError())
     }
 
     const deliverymanAlreadyExists =
       await this.deliverymanRepository.findByDocument(document.toValue())
 
     if (deliverymanAlreadyExists) {
-      return left('Deliveryman already exists.')
+      return left(new DeliverymanAlreadyExistsError())
     }
 
     const deliverymanAddress = new Address(

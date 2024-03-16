@@ -3,6 +3,8 @@ import { Administrator } from '../../enterprise/entities/administrator'
 import { Document } from '../../enterprise/entities/value-objects.ts/document'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { AdministratorRepository } from '../repositories/administrator'
+import { AdministratorAlreadyExistsError } from './errors/administrator-already-exists-error'
+import { InvalidDocumentError } from './errors/invalid-document-error'
 
 interface RegisterAdministratorUseCaseRequest {
   name: string
@@ -11,7 +13,7 @@ interface RegisterAdministratorUseCaseRequest {
 }
 
 type RegisterAdministratorUseCaseResponse = Either<
-  string,
+  AdministratorAlreadyExistsError | InvalidDocumentError,
   {
     administrator: Administrator
   }
@@ -32,14 +34,14 @@ export class RegisterAdministratorUseCase {
     const adminDocument = new Document(document.toString())
 
     if (!document.validateCpf()) {
-      return left('invalid document')
+      return left(new InvalidDocumentError())
     }
 
     const administratorAlreadyExists =
       await this.administratorRepository.findByDocument(document.toValue())
 
     if (administratorAlreadyExists) {
-      return left('Administrator already exists')
+      return left(new AdministratorAlreadyExistsError())
     }
 
     const administrator = Administrator.create({

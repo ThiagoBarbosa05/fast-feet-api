@@ -2,6 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { Address } from '../../enterprise/entities/value-objects.ts/address'
 import { Deliveryman } from '../../enterprise/entities/deliveryman'
 import { DeliverymanRepository } from '../repositories/deliveryman'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface EditDeliverymanUseCaseRequest {
   deliverymanId: string
@@ -10,7 +11,7 @@ interface EditDeliverymanUseCaseRequest {
 }
 
 type EditDeliverymanUseCaseResponse = Either<
-  string,
+  ResourceNotFoundError,
   {
     deliveryman: Deliveryman
   }
@@ -26,7 +27,7 @@ export class EditDeliverymanUseCase {
   }: EditDeliverymanUseCaseRequest): Promise<EditDeliverymanUseCaseResponse> {
     const deliveryman = await this.deliverymanRepository.findById(deliverymanId)
 
-    if (!deliveryman) return left('deliveryman not found.')
+    if (!deliveryman) return left(new ResourceNotFoundError())
 
     if (address) {
       deliveryman.address = new Address(

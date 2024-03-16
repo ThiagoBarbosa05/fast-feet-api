@@ -3,6 +3,8 @@ import { RegisterAdministratorUseCase } from './register-administrator'
 import { InMemoryAdministratorRepository } from 'test/repositories/in-memory-administrator'
 import { Document } from '../../enterprise/entities/value-objects.ts/document'
 import { makeAdministrator } from 'test/factories/make-administrator'
+import { AdministratorAlreadyExistsError } from './errors/administrator-already-exists-error'
+import { InvalidDocumentError } from './errors/invalid-document-error'
 
 let fakeHasher: FakeHasher
 let inMemoryAdministratorRepository: InMemoryAdministratorRepository
@@ -54,6 +56,7 @@ describe('Register Administrator', () => {
     })
 
     expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(InvalidDocumentError)
   })
 
   it('not should be able to register an administrator with the same document.', async () => {
@@ -70,5 +73,6 @@ describe('Register Administrator', () => {
     })
 
     expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(AdministratorAlreadyExistsError)
   })
 })
