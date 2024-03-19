@@ -1,21 +1,26 @@
 import { UniqueEntityID } from '@/core/entities/uniques-entity-id'
-import { Order } from '../../enterprise/entities/orders'
+import { DeliveryStatus, Order } from '../../enterprise/entities/orders'
 import { OrderRepository } from '../repositories/order'
 import { Either, right } from '@/core/either'
 
 interface CreateOrderUseCaseRequest {
-  deliveryStatus: 'waiting' | 'collected' | 'delivered' | 'returned'
+  deliveryStatus?: DeliveryStatus
   deliverymanId: string
   recipientId: string
 }
 
-type CreateOrderUseCaseResponse = Either<null, object>
+type CreateOrderUseCaseResponse = Either<
+  null,
+  {
+    order: Order
+  }
+>
 
 export class CreateOrderUseCase {
   constructor(private orderRepository: OrderRepository) {}
 
   async execute({
-    deliveryStatus,
+    deliveryStatus = 'waiting',
     deliverymanId,
     recipientId,
   }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
@@ -27,6 +32,8 @@ export class CreateOrderUseCase {
 
     await this.orderRepository.create(order)
 
-    return right({})
+    return right({
+      order,
+    })
   }
 }
