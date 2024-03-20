@@ -21,13 +21,15 @@ describe('Edit deliveryman', () => {
       },
       new UniqueEntityID('deliveryman-1'),
     )
-    inMemoryDeliverymanRepository.create(deliveryman)
+    await inMemoryDeliverymanRepository.create(deliveryman)
 
     await sut.execute({
       deliverymanId: deliveryman.id.toString(),
       address: new Address('street x', 'London', 'LD', '34345465456'),
     })
 
-    expect(deliveryman.address.city).toEqual('London')
+    expect(inMemoryDeliverymanRepository.items[0].address.city).toEqual(
+      'London',
+    )
   })
 })

@@ -61,8 +61,6 @@ describe('Fetch orders by deliveryman id', () => {
       page: 1,
     })
 
-    console.log(result.value)
-
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
