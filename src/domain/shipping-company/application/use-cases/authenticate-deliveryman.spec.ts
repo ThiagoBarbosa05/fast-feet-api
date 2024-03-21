@@ -5,7 +5,7 @@ import { makeDeliveryman } from 'test/factories/make-deliveryman'
 import { generateRandomCPF } from 'test/utils/generate-random-cpf'
 import { Document } from '../../enterprise/entities/value-objects.ts/document'
 import { AuthenticateDeliverymanUseCase } from './authenticate-deliveryman'
-import { WrongCredentialsError } from './errors/wrong-credencials-error'
+import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 let inMemoryDeliverymanRepository: InMemoryDeliverymanRepository
 let fakeHasher: FakeHasher

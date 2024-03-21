@@ -31,6 +31,8 @@ describe('Register deliveryman', () => {
         'Rio de Janeiro',
         'Rio de Janeiro',
         '28951730',
+        45436436,
+        23456436,
       ),
     })
 
@@ -48,6 +50,8 @@ describe('Register deliveryman', () => {
         'Rio de Janeiro',
         'Rio de Janeiro',
         '28951730',
+        3454353456,
+        2545345,
       ),
       name: 'John Doe',
       password: 'example',
@@ -70,6 +74,8 @@ describe('Register deliveryman', () => {
         'Rio de Janeiro',
         'Rio de Janeiro',
         '28951730',
+        3454364,
+        3656757,
       ),
       password: 'example',
     })
@@ -93,6 +99,8 @@ describe('Register deliveryman', () => {
         'Rio de Janeiro',
         'Rio de Janeiro',
         '28951730',
+        24345454,
+        3445465456,
       ),
       password: 'example',
     })

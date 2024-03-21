@@ -19,6 +19,8 @@ describe('Create Recipient', () => {
         'Rio de Janeiro',
         'Rio de Janeiro',
         '28951730',
+        335345,
+        3535356,
       ),
       document: new Document('12345678909'),
       name: 'John Doe',

@@ -52,6 +52,8 @@ export class RegisterDeliverymanUseCase {
       address.city,
       address.state,
       address.zipCode,
+      address.latitude,
+      address.longitude,
     )
 
     const deliveryman = Deliveryman.create({

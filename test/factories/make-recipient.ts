@@ -21,6 +21,8 @@ export function makeRecipient(
         faker.location.city(),
         faker.location.state(),
         faker.location.zipCode(),
+        faker.location.latitude(),
+        faker.location.longitude(),
       ),
       orderId: new UniqueEntityID(),
       ...override,

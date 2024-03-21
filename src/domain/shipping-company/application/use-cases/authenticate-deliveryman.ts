@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { DeliverymanRepository } from '../repositories/deliveryman'
 import { HashComparer } from '../cryptography/hash-comparer'
 import { Encrypter } from '../cryptography/encrypter'
-import { WrongCredentialsError } from './errors/wrong-credencials-error'
+import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 interface AuthenticateDeliverymanUseCaseRequest {
   document: string

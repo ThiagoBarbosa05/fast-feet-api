@@ -6,7 +6,7 @@ export type DeliveryStatus = 'waiting' | 'collected' | 'delivered' | 'returned'
 
 export interface OrderProps {
   deliveryStatus: DeliveryStatus
-  deliverymanId: UniqueEntityID
+  deliverymanId?: UniqueEntityID
   recipientId: UniqueEntityID
   createdAt: Date
   updatedAt?: Date | null

@@ -5,7 +5,6 @@ import { Either, right } from '@/core/either'
 
 interface CreateOrderUseCaseRequest {
   deliveryStatus?: DeliveryStatus
-  deliverymanId: string
   recipientId: string
 }
 
@@ -21,11 +20,9 @@ export class CreateOrderUseCase {
 
   async execute({
     deliveryStatus = 'waiting',
-    deliverymanId,
     recipientId,
   }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
     const order = Order.create({
-      deliverymanId: new UniqueEntityID(deliverymanId),
       recipientId: new UniqueEntityID(recipientId),
       deliveryStatus,
     })

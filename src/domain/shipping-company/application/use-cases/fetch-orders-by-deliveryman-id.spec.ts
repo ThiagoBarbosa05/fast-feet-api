@@ -4,6 +4,9 @@ import { InMemoryDeliverymanRepository } from 'test/repositories/in-memory-deliv
 import { makeDeliveryman } from 'test/factories/make-deliveryman'
 import { makeOrder } from 'test/factories/make-order'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient'
+
+let inMemoryRecipientRepository: InMemoryRecipientRepository
 
 let inMemoryOrderRepository: InMemoryOrderRepository
 let inMemoryDeliverymanRepository: InMemoryDeliverymanRepository
@@ -11,7 +14,10 @@ let sut: FetchOrdersByDeliverymanId
 
 describe('Fetch orders by deliveryman id', () => {
   beforeEach(() => {
-    inMemoryOrderRepository = new InMemoryOrderRepository()
+    inMemoryRecipientRepository = new InMemoryRecipientRepository()
+    inMemoryOrderRepository = new InMemoryOrderRepository(
+      inMemoryRecipientRepository,
+    )
     inMemoryDeliverymanRepository = new InMemoryDeliverymanRepository()
     sut = new FetchOrdersByDeliverymanId(inMemoryOrderRepository)
   })

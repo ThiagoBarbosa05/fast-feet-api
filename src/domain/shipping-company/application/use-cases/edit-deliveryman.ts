@@ -35,6 +35,8 @@ export class EditDeliverymanUseCase {
         address.city,
         address.state,
         address.zipCode,
+        address.latitude,
+        address.longitude,
       )
     }
 

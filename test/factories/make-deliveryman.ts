@@ -21,6 +21,8 @@ export function makeDeliveryman(
         faker.location.city(),
         faker.location.state(),
         faker.location.zipCode(),
+        faker.location.latitude(),
+        faker.location.longitude(),
       ),
       password: faker.internet.password(),
       ...override,

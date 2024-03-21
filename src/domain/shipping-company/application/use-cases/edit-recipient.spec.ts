@@ -19,7 +19,14 @@ describe('Edit Recipient Use Case', () => {
 
     const result = await sut.execute({
       name: 'Bob',
-      address: new Address('street example', 'New York', 'NY', '12354545675'),
+      address: new Address(
+        'street example',
+        'New York',
+        'NY',
+        '12354545675',
+        2423452,
+        2355235,
+      ),
       document: '12345678909',
       recipientId: recipientCreated.id.toString(),
     })

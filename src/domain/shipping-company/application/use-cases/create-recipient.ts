@@ -40,6 +40,8 @@ export class CreateRecipientUseCase {
       address.state,
       address.street,
       address.zipCode,
+      address.latitude,
+      address.longitude,
     )
 
     const recipient = Recipient.create({

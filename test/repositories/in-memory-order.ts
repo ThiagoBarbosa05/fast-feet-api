@@ -1,11 +1,16 @@
 import {
+  FindManyNearDeliverymanParams,
   ListManyByDeliverymanIdParams,
   OrderRepository,
 } from '@/domain/shipping-company/application/repositories/order'
 import { Order } from '@/domain/shipping-company/enterprise/entities/orders'
+import { InMemoryRecipientRepository } from './in-memory-recipient'
+import { AddressService } from '@/domain/shipping-company/application/services/address-service'
 
 export class InMemoryOrderRepository implements OrderRepository {
   public items: Order[] = []
+
+  constructor(private recipientRepository: InMemoryRecipientRepository) {}
 
   async create(order: Order) {
     this.items.push(order)
@@ -38,6 +43,33 @@ export class InMemoryOrderRepository implements OrderRepository {
     )
 
     this.items[itemIndex] = order
+  }
+
+  async findManyNearDeliveryman(params: FindManyNearDeliverymanParams) {
+    const recipientWithAddressNearby = this.recipientRepository.items.filter(
+      (item) => {
+        const distance = new AddressService().getDistanceBetweenCoordinates(
+          {
+            latitude: params.latitude,
+            longitude: params.longitude,
+          },
+          {
+            latitude: item.address.latitude,
+            longitude: item.address.longitude,
+          },
+        )
+
+        return distance < 20 // less 20 km distance
+      },
+    )
+
+    const orderIds = recipientWithAddressNearby.map((recipient) =>
+      recipient.id.toString(),
+    )
+
+    return this.items.filter((item) =>
+      orderIds.includes(item.recipientId.toString()),
+    )
   }
 
   async delete(order: Order) {
