@@ -23,7 +23,12 @@ export class Order extends Entity<OrderProps> {
   }
 
   get deliverymanId() {
-    return this.props.deliverymanId
+    return this.props.deliverymanId!
+  }
+
+  set deliverymanId(deliverymanId: UniqueEntityID) {
+    this.props.deliverymanId = deliverymanId
+    this.touch()
   }
 
   get recipientId() {

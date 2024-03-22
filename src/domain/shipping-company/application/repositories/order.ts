@@ -5,6 +5,10 @@ export interface ListManyByDeliverymanIdParams extends PaginationParams {
   deliverymanId: string
 }
 
+export interface ListManyByRecipientIdParams extends PaginationParams {
+  recipientId: string
+}
+
 export interface FindManyNearDeliverymanParams {
   latitude: number
   longitude: number
@@ -16,6 +20,11 @@ export abstract class OrderRepository {
     deliverymanId,
     page,
   }: ListManyByDeliverymanIdParams): Promise<Order[] | null>
+
+  abstract listManyByRecipientId({
+    recipientId,
+    page,
+  }: ListManyByRecipientIdParams): Promise<Order[] | null>
 
   abstract findById(orderId: string): Promise<Order | null>
   abstract save(order: Order): Promise<void>
