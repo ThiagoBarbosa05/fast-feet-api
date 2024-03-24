@@ -1,4 +1,4 @@
-import { Entity } from '@/core/entities/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityID } from '@/core/entities/uniques-entity-id'
 import { Optional } from '@/core/types/optional'
 
@@ -12,7 +12,7 @@ export interface OrderProps {
   updatedAt?: Date | null
 }
 
-export class Order extends Entity<OrderProps> {
+export class Order extends AggregateRoot<OrderProps> {
   get deliveryStatus() {
     return this.props.deliveryStatus
   }
