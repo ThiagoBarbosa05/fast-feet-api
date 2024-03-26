@@ -37,7 +37,9 @@ describe('Mark Order as Delivered', () => {
   })
 
   it('should not be possible to mark the order as delivered by another deliveryman.', async () => {
-    const order = makeOrder()
+    const order = makeOrder({
+      deliverymanId: new UniqueEntityID('deliveryman-2'),
+    })
 
     await inMemoryOrderRepository.create(order)
 

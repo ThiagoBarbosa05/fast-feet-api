@@ -10,7 +10,6 @@ export function makeOrder(
 ) {
   const order = Order.create(
     {
-      deliverymanId: new UniqueEntityID(),
       recipientId: new UniqueEntityID(),
       deliveryStatus: 'waiting',
       ...override,

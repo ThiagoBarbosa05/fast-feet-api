@@ -6,7 +6,7 @@ import { UniqueEntityID } from '@/core/entities/uniques-entity-id'
 export interface SendNotificationUseCaseRequest {
   recipientId: string
   title: string
-  content: string
+  content?: string
 }
 
 export type SendNotificationUseCaseResponse = Either<
@@ -22,7 +22,7 @@ export class SendNotificationUseCase {
   async execute({
     recipientId,
     title,
-    content,
+    content = '',
   }: SendNotificationUseCaseRequest): Promise<SendNotificationUseCaseResponse> {
     const notification = Notification.create({
       recipientId: new UniqueEntityID(recipientId),

@@ -7,6 +7,7 @@ import {
 import { Order } from '@/domain/shipping-company/enterprise/entities/orders'
 import { InMemoryRecipientRepository } from './in-memory-recipient'
 import { AddressService } from '@/domain/shipping-company/application/services/address-service'
+import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryOrderRepository implements OrderRepository {
   public items: Order[] = []
@@ -15,6 +16,8 @@ export class InMemoryOrderRepository implements OrderRepository {
 
   async create(order: Order) {
     this.items.push(order)
+
+    DomainEvents.dispatchEventsForAggregate(order.id)
   }
 
   async listManyByDeliverymanId({
@@ -57,6 +60,8 @@ export class InMemoryOrderRepository implements OrderRepository {
     )
 
     this.items[itemIndex] = order
+
+    DomainEvents.dispatchEventsForAggregate(order.id)
   }
 
   async findManyNearDeliveryman(params: FindManyNearDeliverymanParams) {
