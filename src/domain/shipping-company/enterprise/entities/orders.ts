@@ -3,6 +3,7 @@ import { UniqueEntityID } from '@/core/entities/uniques-entity-id'
 import { Optional } from '@/core/types/optional'
 import { OrderCreatedEvent } from '../events/order-created-event'
 import { UpdateDeliveryStatusEvent } from '../events/update-delivery-status-event'
+import { OrderAttachments } from './order-attachments'
 
 export type DeliveryStatus = 'waiting' | 'collected' | 'delivered' | 'returned'
 
@@ -10,6 +11,7 @@ export interface OrderProps {
   deliveryStatus: DeliveryStatus
   deliverymanId?: UniqueEntityID
   recipientId: UniqueEntityID
+  attachments: OrderAttachments[]
   collectedAt?: Date | null
   deliveredAt?: Date | null
   returnedAt?: Date | null
@@ -54,6 +56,14 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.recipientId
   }
 
+  get attachments() {
+    return this.props.attachments
+  }
+
+  set attachments(attachments: OrderAttachments[]) {
+    this.props.attachments = attachments
+  }
+
   get createdAt() {
     return this.props.createdAt
   }
@@ -66,8 +76,14 @@ export class Order extends AggregateRoot<OrderProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<OrderProps, 'createdAt'>, id?: UniqueEntityID) {
-    const order = new Order({ ...props, createdAt: new Date() }, id)
+  static create(
+    props: Optional<OrderProps, 'createdAt' | 'attachments'>,
+    id?: UniqueEntityID,
+  ) {
+    const order = new Order(
+      { ...props, attachments: props.attachments || [], createdAt: new Date() },
+      id,
+    )
 
     const isNewOrder = !id
 

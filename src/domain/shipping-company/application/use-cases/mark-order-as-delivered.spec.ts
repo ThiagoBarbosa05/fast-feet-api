@@ -28,12 +28,18 @@ describe('Mark Order as Delivered', () => {
     const result = await sut.execute({
       deliverymanId: 'deliveryman-1',
       orderId: order.id.toString(),
+      attachmentsIds: ['1', '2'],
     })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryOrderRepository.items[0]).toMatchObject({
       deliveryStatus: 'delivered',
     })
+    expect(inMemoryOrderRepository.items[0].attachments).toHaveLength(2)
+    expect(inMemoryOrderRepository.items[0].attachments).toEqual([
+      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
+    ])
   })
 
   it('should not be possible to mark the order as delivered by another deliveryman.', async () => {
@@ -46,6 +52,24 @@ describe('Mark Order as Delivered', () => {
     const result = await sut.execute({
       deliverymanId: 'deliveryman-1',
       orderId: order.id.toString(),
+      attachmentsIds: ['1', '2'],
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
+  })
+
+  it('should not be possible to mark the order as delivered without an attachment', async () => {
+    const order = makeOrder({
+      deliverymanId: new UniqueEntityID('deliveryman-1'),
+    })
+
+    await inMemoryOrderRepository.create(order)
+
+    const result = await sut.execute({
+      deliverymanId: 'deliveryman-1',
+      orderId: order.id.toString(),
+      attachmentsIds: [],
     })
 
     expect(result.isLeft()).toBe(true)
