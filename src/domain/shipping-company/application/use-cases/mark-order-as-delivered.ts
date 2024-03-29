@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { OrderAttachments } from '../../enterprise/entities/order-attachments'
 import { UniqueEntityID } from '@/core/entities/uniques-entity-id'
+import { OrderAttachmentsList } from '../../enterprise/entities/order-attachments-list'
 
 export interface MarkOrderAsDeliveredUseCaseRequest {
   deliverymanId: string
@@ -49,7 +50,7 @@ export class MarkOrderAsDeliveredUseCase {
       })
     })
 
-    orderDelivered.attachments = ordersAttachments
+    orderDelivered.attachments = new OrderAttachmentsList(ordersAttachments)
 
     orderDelivered.deliveryStatus = 'delivered'
 

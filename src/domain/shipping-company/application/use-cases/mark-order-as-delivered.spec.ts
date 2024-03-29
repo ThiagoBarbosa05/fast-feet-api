@@ -35,8 +35,10 @@ describe('Mark Order as Delivered', () => {
     expect(inMemoryOrderRepository.items[0]).toMatchObject({
       deliveryStatus: 'delivered',
     })
-    expect(inMemoryOrderRepository.items[0].attachments).toHaveLength(2)
-    expect(inMemoryOrderRepository.items[0].attachments).toEqual([
+    expect(
+      inMemoryOrderRepository.items[0].attachments.currentItems,
+    ).toHaveLength(2)
+    expect(inMemoryOrderRepository.items[0].attachments.currentItems).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
       expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
     ])
